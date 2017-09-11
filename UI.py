@@ -26,9 +26,9 @@ def selectimage(event):
 def creategird(event):
     print (wid.get())
     global acv
-    acv = Logic.Logic.creategrid(cv2.imread(d), wid.get(), count.get()+1, color =(red.get()
+    acv = Logic.Logic.creategrid(cv2.imread(d), wid.get(), count.get()+1, color =(blue.get()
                                                                                   ,green.get(),
-                                                                                  blue.get()))
+                                                                                  red.get()))
     a = acv
     a = cv2.resize(a, (400, 400))
     a= cvtotk(a)
