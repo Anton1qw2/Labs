@@ -26,8 +26,9 @@ class Logic:
                 else:
                     y = y + 1
             if x == 0:
-                for k in (i-1, i, i+1):
-                    img_output[k, 0:w] = img[k, 0:w]
+				for k in (i-1, i, i+1):
+					if i-1 > 0 and i+1 < w:
+						img_output[k, 0:w] = img[k, 0:w]
 
         for i in range(w):
             x, y = 0, 0
@@ -38,7 +39,8 @@ class Logic:
                     y = y + 1
             if x == 0:
                 for k in (i-1, i, i+1):
-                    img_output[0:h, k] = img[0:h, k]
+					if i-1 > 0 and i+1 < h:
+						img_output[0:h, k] = img[0:h, k]
 
         cv2.imshow('456', img - img_output)
         return img_output
