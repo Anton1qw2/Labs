@@ -3,6 +3,7 @@ import cv2
 import tkinter as tk
 from PIL import Image, ImageTk
 from tkinter.filedialog import askopenfile as fo
+d= 'Stock.jpg'
 def printer (event):
     print ("hello world")
 def cvtotk(a):
@@ -11,24 +12,33 @@ def cvtotk(a):
     alo = ImageTk.PhotoImage(alo)
     return alo
 def selectimage(event):
-    d = fo()
-    print(d.name)
-    acv = cv2.imread(d.name)
+    global d
+    global acv
+    z = fo().name
+    if len(z)>0:
+        d = z
+    print(d)
+    acv = cv2.imread(d)
     a= cvtotk(cv2.resize(acv, (400, 400)))
     leftwindow.create_image(0, 0, image=a, anchor="nw")
-    leftwindow.pack(side="right")
+    leftwindow.pack(side="left")
     root.mainloop()
 def creategird(event):
-    a= Logic.Logic.creategrid(acv, 10, 5, color =(0,125,0))
+    print (wid.get())
+    global acv
+    acv = Logic.Logic.creategrid(cv2.imread(d), wid.get(), count.get()+1, color =(0,125,0))
+    a = acv
     a = cv2.resize(a, (400, 400))
     a= cvtotk(a)
-    rightwindow.create_image(0, 0, image=a, anchor="nw")
-    rightwindow.pack(side="right")
+    leftwindow.create_image(0, 0, image=a, anchor="nw")
+    leftwindow.pack(side="left")
     root.mainloop()
     print("Решетка")
 def findgird(event):
 #    cv2.imshow('234', acv)
 #    cv2.waitKey(0)
+    global acv
+##    a = Logic.Logic.findgrid(cv2.resize(acv, (0,0), fx=1.7, fy=1.7))
     a = Logic.Logic.findgrid(acv)
     a = cv2.resize(a, (400, 400))
     a= cvtotk(a)
@@ -39,29 +49,42 @@ def findgird(event):
 
 
 root = tk.Tk()
-acv= cv2.imread('Stock.jpg')
-#Настройка кнопок
-selectim = tk.Button(root, text = "Выберете изображение")
-selectim.bind("<Button-1>", selectimage)
-selectim.pack()
-crtgird = tk.Button(root, text ="Создать решетку")
-crtgird.bind("<Button-1>", creategird )
-crtgird.pack()
-fndgird = tk.Button(root, text = "Найти решетку")
-fndgird.bind("<Button-1>",findgird)
-fndgird.pack()
-
-root.resizable
+acv= cv2.imread(d)
+#Настройка окон
+toolbar = tk.Frame(root, width=800, height = 50)
 leftwindow = tk.Canvas(root, width=400, height = 400)
 rightwindow = tk.Canvas(root, width = 400, height= 400)
-#a = Image.open(a)
+#Настройка кнопок
+selectim = tk.Button(toolbar, text = "Выберете изображение")
+selectim.bind("<Button-1>", selectimage)
+selectim.pack(side = "left")
+crtgird = tk.Button(toolbar, text ="Создать решетку")
+crtgird.bind("<Button-1>", creategird )
+fndgird = tk.Button(toolbar, text = "Найти решетку")
+fndgird.bind("<Button-1>",findgird)
+fndgird.pack(side = "left")
+crtgird.pack(side = "left")
+#Текст
+textforwidth = tk.Canvas(toolbar, width = 60, height = 40)
+textforwidth.create_text((35,10), text= "Ширина:")
+textcount = tk.Canvas(toolbar, width = 60, height = 40)
+textcount.create_text((35,10), text ="Кол-во:")
+#Настройка ползунков
+wid= tk.Scale(toolbar,from_=0, to=50, orient = tk.HORIZONTAL)
+textforwidth.pack(side="left")
+wid.pack(side = "left")
+count = tk.Scale(toolbar, from_=0, to=20, orient = tk.HORIZONTAL)
+textcount.pack(side = "left")
+count.pack(side = "left")
+#настройка содержимого окон
 a = cvtotk(cv2.resize(acv, (400, 400) ))
 rightwindow.create_image(0,0, image =a, anchor = "nw")
-rightwindow.addtag_all('im')
+toolbar.pack(side = "bottom")
 rightwindow.pack(side = "right")
 leftwindow.create_image(0,0, image=a,anchor ="nw")
 leftwindow.addtag_all('im')
 leftwindow.pack(side = "left")
+
 #tk.Label(root, text = "/home/anton/Downloads/345.jpg").pack()
 root.mainloop()
 

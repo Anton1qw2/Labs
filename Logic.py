@@ -11,6 +11,7 @@ class Logic:
         return img
 
     def findgrid(img):
+
         h, w, c = img.shape
         img_output = np.zeros((h, w, 3), np.uint8)
         img_output[0:h,0:w] = (255,255,255)
