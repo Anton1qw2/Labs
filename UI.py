@@ -41,7 +41,7 @@ def findgird(event):
 #    cv2.waitKey(0)
     global acv
 ##    a = Logic.Logic.findgrid(cv2.resize(acv, (0,0), fx=1.7, fy=1.7))
-    a = Logic.Logic.findgrid(acv)
+    a = Logic.Logic.findgrid(cv2.resize(acv, (400,400)))
     a = cv2.resize(a, (400, 400))
     a= cvtotk(a)
     rightwindow.create_image(0, 0, image=a, anchor="nw")
