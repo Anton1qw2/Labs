@@ -16,7 +16,7 @@ class Logic:
         img_output = np.zeros((h, w, 3), np.uint8)
         img_output[0:h,0:w] = (255,255,255)
 
-        img_edge = cv2.Canny(img, 10, 50)
+        img_edge = cv2.Canny(img, 10, 200)
 
         x, y = 0, 0
         for i in range(h):
