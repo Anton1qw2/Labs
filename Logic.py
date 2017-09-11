@@ -42,7 +42,6 @@ class Logic:
                     if i-1 > 0 and i+1 < h:
                         img_output[0:h, k] = img[0:h, k]
 
-        cv2.imshow('456', img - img_output)
         return img_output
 '''
     img_input = cv2.imread('C:/Users/Natali/Documents/145274.jpg')
