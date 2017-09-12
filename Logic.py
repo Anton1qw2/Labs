@@ -11,12 +11,13 @@ class Logic:
         return img
 
     def findgrid(img):
+        img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+        cv2.equalizeHist(img)
+        h, w = img.shape
+        img_output = np.zeros((h, w), np.uint8)
+        img_output[0:h,0:w] = (255)
 
-        h, w, c = img.shape
-        img_output = np.zeros((h, w, 3), np.uint8)
-        img_output[0:h,0:w] = (255,255,255)
-
-        img_edge = cv2.Canny(img, 10, 200)
+        img_edge = cv2.Canny(img, 0, 30)
 
         x, y = 0, 0
         for i in range(h):
@@ -42,7 +43,7 @@ class Logic:
                 for k in (i-1, i, i+1):
                     if i-1 > 0 and i+1 < h:
                         img_output[0:h, k] = img[0:h, k]
-
+        img_output = cv2.cvtColor(img_output, cv2.COLOR_GRAY2BGR)
         return img_output
 '''
     img_input = cv2.imread('C:/Users/Natali/Documents/145274.jpg')
